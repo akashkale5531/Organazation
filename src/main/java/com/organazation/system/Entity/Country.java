@@ -14,7 +14,7 @@ public class Country {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cid", updatable = false)
     @Schema(description = "Unique identifier for the country", example = "101")
-    private int cid;
+    private long cid;
 
     @Column(name = "cname")
     @NotNull(message = "Country name cannot be null")
@@ -26,16 +26,16 @@ public class Country {
         super();
     }
 
-    public Country(int cid, String cname) {
+    public Country(long cid, String cname) {
         this.cid = cid;
         this.cname = cname;
     }
 
-    public int getCid() {
+    public long getCid() {
         return cid;
     }
 
-    public void setCid(int cid) {
+    public void setCid(long cid) {
         this.cid = cid;
     }
 

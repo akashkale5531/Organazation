@@ -2,6 +2,7 @@ package com.organazation.system.Service;
 
 import com.organazation.system.Entity.Country;
 import com.organazation.system.Entity.Employee;
+import com.organazation.system.Handler.ResourceNotFoundException;
 import com.organazation.system.Repository.CountryRepo;
 import com.organazation.system.Repository.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,9 @@ public class EmployeeServiceClass {
     }
 
     public String addEmployee(Employee employee){
+        Country country=countryRepo.findById(employee.getCountry().getCid()).
+                orElseThrow(() -> new ResourceNotFoundException("Country with ID " + employee.getCountry().getCid() + " not found"));
+        employee.setCountry(country);
         employeeRepo.save(employee);
         return "Employee details is added";
     }
@@ -82,5 +86,19 @@ public class EmployeeServiceClass {
         return employeeRepo.findBySalaryBetween(startSalary,endSalary);
     }
 
+    public Employee getEmployeeId(long id){
+        return employeeRepo.findById(id).orElse(null);
+    }
+     public List<Employee> getAllEmployee(){
+        return employeeRepo.findAll();
+     }
+
+     public String deleteEmp(long id){
+        if(employeeRepo.existsById(id)){
+            employeeRepo.deleteById(id);
+            return "Employee Details Has Been Deleted";
+        }
+        return "Employee not found";
+     }
 
 }

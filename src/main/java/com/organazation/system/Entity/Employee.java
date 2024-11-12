@@ -1,5 +1,7 @@
 package com.organazation.system.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -8,12 +10,14 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.NonNull;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Schema(description = "Details about the country")
 @Table(name = "employee")
-public class Employee {
+//@JsonInclude(JsonInclude.Include.ALWAYS)
+public class Employee implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,6 +77,7 @@ public class Employee {
     @JoinColumn(name = "cid")
     @Schema(description = "Country associated with the employee")
     private Country country;
+
 
     public Employee() {
 
